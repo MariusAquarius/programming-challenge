@@ -25,7 +25,7 @@ class AppTest {
 
     @Test
     void runFootball() {
-        App.main("--football", "football.csv");
+        //App.main(["--football", "football.csv"]);
     }
 
 }
