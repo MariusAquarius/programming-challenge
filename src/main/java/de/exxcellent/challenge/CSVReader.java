@@ -12,10 +12,12 @@ import java.util.Scanner;
  * @version 0.1
 */
 
-//object of class CSVReader will be created to read .csv files and create objects from the .csv's content
 public class CSVReader {
-	
+	/** attribute holding the titles for the csv content (key) 
+	 * */
 	private List<String> header = new ArrayList<>();
+	/** attribute holding the values of the csv content (value) 
+	 * */
 	private List<List<String>> content = new ArrayList<>();
 	
 	/** Creates a CSVReader object. */
@@ -37,16 +39,15 @@ public class CSVReader {
 			//create File object and corresponding Scanner
 			File csvFile = new File(classLoader.getResource(filePath).getFile());
 			Scanner csvScanner = new Scanner(csvFile);
+			String[] rowAsArray;
 			//set first row as the CSVReader objects head
 			if(csvScanner.hasNextLine()) {
-				String firstRow = csvScanner.nextLine();
-				String[] rowAsArray = firstRow.split(",");
+				rowAsArray = rowToArray(csvScanner.nextLine());
 				this.setHeader(new ArrayList<>(Arrays.asList(rowAsArray)));
 			}
-			//push a new row of content with every line of the csv
+			//push a new row of content with every line of the .csv
 			while(csvScanner.hasNextLine()) {
-				String nextRow = csvScanner.nextLine();
-				String[] rowAsArray = nextRow.split(",");
+				rowAsArray = rowToArray(csvScanner.nextLine());
 				this.content.add(new ArrayList<>(Arrays.asList(rowAsArray)));				
 			}
 			csvScanner.close();
@@ -59,6 +60,14 @@ public class CSVReader {
 			System.out.println("ERR: The file path must not start with '/' if the first element in the filepath is a folder.");
 			e.printStackTrace();
 		}
+	}
+	/** transforms a row from the .csv file to an array
+	 * @param csvRow a String which resulted from scanning the .csv file's first row
+	 * @return rowAsArray a String array containing the split values
+	*/
+	public static String[] rowToArray(String csvRow) {
+		String[] rowAsArray = csvRow.split(",");
+		return rowAsArray;
 	}
 	
 	/* getters and setters */
