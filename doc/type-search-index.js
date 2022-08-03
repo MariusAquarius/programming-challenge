@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"de.exxcellent.challenge","l":"CSVReader"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"de.exxcellent.challenge","l":"App"},{"p":"de.exxcellent.challenge","l":"CSVReader"}];updateSearchResults();

@@ -2,6 +2,9 @@ package de.exxcellent.challenge;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /** Used to create a CSVReader object to read .csv files and create objects out of its content.
@@ -12,8 +15,8 @@ import java.util.Scanner;
 //object of class CSVReader will be created to read .csv files and create objects from the .csv's content
 public class CSVReader {
 	
-	private String[] head;
-	private String[][] content;
+	private List<String> header = new ArrayList<>();
+	private List<List<String>> content = new ArrayList<>();
 	
 	/** Creates a CSVReader object. */
 	public CSVReader() {}
@@ -34,8 +37,17 @@ public class CSVReader {
 			//create File object and corresponding Scanner
 			File csvFile = new File(classLoader.getResource(filePath).getFile());
 			Scanner csvScanner = new Scanner(csvFile);
-			while(csvScanner.hasNext()) {
-				System.out.println(csvScanner.next());
+			//set first row as the CSVReader objects head
+			if(csvScanner.hasNextLine()) {
+				String firstRow = csvScanner.nextLine();
+				String[] rowAsArray = firstRow.split(",");
+				this.setHeader(new ArrayList<>(Arrays.asList(rowAsArray)));
+			}
+			//push a new row of content with every line of the csv
+			while(csvScanner.hasNextLine()) {
+				String nextRow = csvScanner.nextLine();
+				String[] rowAsArray = nextRow.split(",");
+				this.content.add(new ArrayList<>(Arrays.asList(rowAsArray)));				
 			}
 			csvScanner.close();
 			
@@ -53,25 +65,25 @@ public class CSVReader {
 	/** Returns the head attribute.
 	 * @return head a String array containing the title of each column.
 	*/
-	public String[] getHead() {
-		return head;
+	public List<String> getHeader() {
+		return header;
 	}
 	/** Sets the title of the columns.
 	 * @param head a String array containing the title of each column.
 	*/
-	public void setHead(String[] head) {
-		this.head = head;
+	public void setHeader(List<String> head) {
+		this.header = head;
 	}
 	/** Returns the content attribute.
-	 * @return content a String 2D array which contains the content of all rows and columns.
+	 * @return content a String 2D ArrayList which contains the content of all rows and columns.
 	*/
-	public String[][] getContent() {
+	public List<List<String>> getContent() {
 		return content;
 	}
 	/** Sets the whole content of the object.
-	 * @param content a String 2D array which contains the content of all rows and columns.
+	 * @param content a String 2D ArrayList which contains the content of all rows and columns.
 	*/
-	public void setContent(String[][] content) {
+	public void setContent(List<List<String>> content) {
 		this.content = content;
 	}	
 }

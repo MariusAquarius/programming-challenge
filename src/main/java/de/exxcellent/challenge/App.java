@@ -5,6 +5,7 @@ package de.exxcellent.challenge;
  * design. Read: create your own classes and packages as appropriate.
  *
  * @author Benjamin Schmid <benjamin.schmid@exxcellent.de>
+ * @author Marius Unger
  */
 public final class App {
 
@@ -14,11 +15,20 @@ public final class App {
      */
     public static void main(String[] args) {
     	
-    	CSVReader csv = new CSVReader();
-    	csv.read("de/exxcellent/challenge/football.csv");
-
-        
-
+    	//creating CSVReader objects
+    	CSVReader csvWeather = new CSVReader("de/exxcellent/challenge/weather.csv");
+    	CSVReader csvFootball = new CSVReader("de/exxcellent/challenge/football.csv");
+    	
+    	//printing both .csvs as ArrayLists
+    	System.out.println("WeatherCSV:");
+    	System.out.println(csvWeather.getHeader());
+    	System.out.println(csvWeather.getContent());
+    	
+    	System.out.println("\nFootballCSV:");
+    	System.out.println(csvFootball.getHeader());
+    	System.out.println(csvFootball.getContent());
+    	
+    	
     	/*
         String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
