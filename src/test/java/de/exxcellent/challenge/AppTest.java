@@ -25,7 +25,7 @@ class AppTest {
 
     @Test
     void runFootball() {
-    	String[] args = {"weather"};
+    	String[] args = {"123", "456", "weather", "32"};
         App.main(args);
     }
 

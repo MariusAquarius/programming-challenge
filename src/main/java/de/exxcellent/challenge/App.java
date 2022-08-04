@@ -26,6 +26,7 @@ public final class App {
     		if((args[i] == "weather") || (args[i] == "football")) {
     			argPos = i;
     			argsGiven = true;
+    			break;
     		}
     	}
     	//if no arguments are passed to main
@@ -51,7 +52,7 @@ public final class App {
     		mapKeys = weatherKeys;
     	
     	//creating CSVReader object
-    	CSVReader csvWeather = new CSVReader("de/exxcellent/challenge/" + args[0] + ".csv");
+    	CSVReader csvWeather = new CSVReader("de/exxcellent/challenge/" + args[argPos] + ".csv");
     	
     	//creating map from csv content
     	RowsToMap mapFromCSV = new RowsToMap(csvWeather);
