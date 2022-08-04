@@ -25,10 +25,7 @@ public final class App {
     	RowsToMap weatherMap = new RowsToMap(csvWeather);
     	RowsToMap footballMap = new RowsToMap(csvFootball);
     	
-    	//printing maps
-    	System.out.println(weatherMap.props.keySet() + "\n" + weatherMap.props.values());
-    	System.out.println("\n" + footballMap.props.keySet() + "\n" + footballMap.props.values());
-    	
+    	//printing results   	
     	dayWithSmallestTempSpread = getDifference(weatherMap, "Day", "MxT", "MnT");
     	System.out.println("Day with smallest temperature spread: " + dayWithSmallestTempSpread);
     	teamWithSmallestGoalDiff = getDifference(footballMap, "Team", "Goals", "Goals Allowed");
