@@ -19,7 +19,7 @@ public final class App {
     	CSVReader csvWeather = new CSVReader("de/exxcellent/challenge/weather.csv");
     	CSVReader csvFootball = new CSVReader("de/exxcellent/challenge/football.csv");
     	
-    	//printing both .csvs as ArrayLists
+    	/*
     	System.out.println("WeatherCSV:");
     	System.out.println(csvWeather.getHeader());
     	System.out.println(csvWeather.getContent());
@@ -27,9 +27,14 @@ public final class App {
     	System.out.println("\nFootballCSV:");
     	System.out.println(csvFootball.getHeader());
     	System.out.println(csvFootball.getContent());
+    	*/
+    	RowsToMap weatherMap = new RowsToMap(csvWeather);
+    	RowsToMap footballMap = new RowsToMap(csvFootball);
+    	System.out.println(weatherMap.props.keySet() + "\n" + weatherMap.props.values());
+    	System.out.println("\n" + footballMap.props.keySet() + "\n" + footballMap.props.values());
     	
     	
-    	
+
     	/*
         String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);

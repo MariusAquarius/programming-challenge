@@ -15,10 +15,10 @@ import java.util.Scanner;
 public class CSVReader {
 	/** attribute holding the titles for the csv content (key) 
 	 * */
-	private List<String> header = new ArrayList<>();
+	private ArrayList<String> header = new ArrayList<>();
 	/** attribute holding the values of the csv content (value) 
 	 * */
-	private List<List<String>> content = new ArrayList<>();
+	private ArrayList<ArrayList<String>> content = new ArrayList<>();
 	
 	/** Creates a CSVReader object. */
 	public CSVReader() {}
@@ -48,7 +48,7 @@ public class CSVReader {
 			//push a new row of content with every line of the .csv
 			while(csvScanner.hasNextLine()) {
 				rowAsArray = rowToArray(csvScanner.nextLine());
-				this.content.add(new ArrayList<>(Arrays.asList(rowAsArray)));				
+				this.content.add(new ArrayList<>(Arrays.asList(rowAsArray)));			
 			}
 			csvScanner.close();
 			
@@ -80,19 +80,19 @@ public class CSVReader {
 	/** Sets the title of the columns.
 	 * @param head a String array containing the title of each column.
 	*/
-	public void setHeader(List<String> head) {
+	public void setHeader(ArrayList<String> head) {
 		this.header = head;
 	}
 	/** Returns the content attribute.
 	 * @return content a String 2D ArrayList which contains the content of all rows and columns.
 	*/
-	public List<List<String>> getContent() {
+	public ArrayList<ArrayList<String>> getContent() {
 		return content;
 	}
 	/** Sets the whole content of the object.
 	 * @param content a String 2D ArrayList which contains the content of all rows and columns.
 	*/
-	public void setContent(List<List<String>> content) {
+	public void setContent(ArrayList<ArrayList<String>> content) {
 		this.content = content;
 	}	
 }
