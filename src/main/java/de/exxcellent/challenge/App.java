@@ -15,7 +15,7 @@ public final class App {
      */
     public static void main(String[] args) {
     	
-    	String dayWithSmallestTempSpread;
+    	String dayWithSmallestTempSpread, teamWithSmallestGoalDiff;
     	
     	//creating CSVReader objects
     	CSVReader csvWeather = new CSVReader("de/exxcellent/challenge/weather.csv");
@@ -29,20 +29,41 @@ public final class App {
     	System.out.println(weatherMap.props.keySet() + "\n" + weatherMap.props.values());
     	System.out.println("\n" + footballMap.props.keySet() + "\n" + footballMap.props.values());
     	
-    	dayWithSmallestTempSpread = getDayWithSmallestTempSpread(weatherMap);
-    	System.out.println("\nDay with smallest temperature spread: " + dayWithSmallestTempSpread);
+    	dayWithSmallestTempSpread = getDifference(weatherMap, "Day", "MxT", "MnT");
+    	System.out.println("Day with smallest temperature spread: " + dayWithSmallestTempSpread);
+    	teamWithSmallestGoalDiff = getDifference(footballMap, "Team", "Goals", "Goals Allowed");
+    	System.out.println("\nTeam with minimum goal difference: " + teamWithSmallestGoalDiff);
     }
-    
+
     /**
-     * Function to get the smallest spread in temperature (smallest difference between max and min temperature on a day).
-     * @param weatherMap a RowsToMap object featuring the weather data as a map
-     * @return day a String hosting the day with the smallest temperature spread
+     * Function returning the value with the smallest absolute difference
+     * @param map contains the map on which the absolute difference will be checked
+     * @param targetKey the key for the column with name/target values
+     * @param maxKey the key for the column with high values
+     * @param minKey the key for the column with smaller values
+     * @return target the String containing the target value with the least difference
      */
-    public static String getDayWithSmallestTempSpread(RowsToMap weatherMap) {
-    	String day = "0";
-    	int minSpread = 0, currentSpread;
-    	for(int i = 0; i < weatherMap.props.get("Day").size(); i++) {
-    		currentSpread = getTempDifference(weatherMap.props.get("MxT").get(i), weatherMap.props.get("MnT").get(i));
+    
+    public static String getDifference(RowsToMap map, String targetKey, String maxKey, String minKey) {
+    	String target = "";
+    	float minSpread = 0, currentSpread;
+    	boolean falseInput = false;
+    	
+    	//check if given keys are valid
+    	if(!map.props.containsKey(targetKey))
+    		falseInput = true;
+    	if(!map.props.containsKey(maxKey))
+    		falseInput = true;
+    	if(!map.props.containsKey(minKey))
+    		falseInput = true;
+    	
+    	if(falseInput)
+    		return "\nERR: You may have entered false keys.";
+    	
+    	for(int i = 0; i < map.props.get(targetKey).size(); i++) {
+    		String maxAsString = map.props.get(maxKey).get(i);
+    		String minAsString = map.props.get(minKey).get(i);
+    		currentSpread = Math.abs(Float.parseFloat(maxAsString) - Float.parseFloat(minAsString));
     		if(i == 0) {
     			//in the first run the current spread is also the minimum
     			minSpread = currentSpread;
@@ -52,23 +73,11 @@ public final class App {
     				//if the current spread is less than the minimum, the current value should be assigned to the minimum
     				minSpread = currentSpread;
     				//save the day
-    				day = weatherMap.props.get("Day").get(i);
+    				target = map.props.get(targetKey).get(i);
     			}
     		}
     	}
-    	return day;
-    }
-    
-    /**
-     * Function returning the temperature difference
-     * @param mxt maximum temperature as String
-     * @param mnt minimum temperature as String
-     * @return diff temperature difference as integer
-     */
-    public static int getTempDifference(String mxt, String mnt) {
-    	int max = Integer.parseInt(mxt);
-    	int min = Integer.parseInt(mnt);
-    	int diff = max - min;
-    	return diff;
+    	
+    	return target;
     }
 }
