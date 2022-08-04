@@ -4,7 +4,7 @@ package de.exxcellent.challenge;
  * The entry class for your solution. This class is only aimed as starting point and not intended as baseline for your software
  * design. Read: create your own classes and packages as appropriate.
  *
- * @author Benjamin Schmid <benjamin.schmid@exxcellent.de>
+ * @author Benjamin Schmid 
  * @author Marius Unger
  */
 public final class App {
@@ -15,21 +15,50 @@ public final class App {
      */
     public static void main(String[] args) {
     	
-    	String dayWithSmallestTempSpread, teamWithSmallestGoalDiff;
+    	String smallestDiffResult, outputText ="";
+    	int argPos = 0;
+    	boolean argsGiven = false;
+    	String[] mapKeys = null;
     	
-    	//creating CSVReader objects
-    	CSVReader csvWeather = new CSVReader("de/exxcellent/challenge/weather.csv");
-    	CSVReader csvFootball = new CSVReader("de/exxcellent/challenge/football.csv");
+    	//check arguments
+    	for(int i = 0; i < args.length; i++) {
+    		//ignore other args
+    		if((args[i] == "weather") || (args[i] == "football")) {
+    			argPos = i;
+    			argsGiven = true;
+    		}
+    	}
+    	//if no arguments are passed to main
+    	if((args.length < 1) || !argsGiven) {
+    		System.out.println("You have not entered one of the commands 'weather' or 'football'.");
+    		return;
+    	}
     	
-    	//creating maps from csv contents
-    	RowsToMap weatherMap = new RowsToMap(csvWeather);
-    	RowsToMap footballMap = new RowsToMap(csvFootball);
+    	//Strings for output
+    	String footballText = "Team with minimum goal difference: ";
+    	String weatherText = "Day with smallest temperature spread: ";
+    	if(args[argPos] == "football")
+    		outputText = footballText;
+    	if(args[argPos] == "weather")
+    		outputText = weatherText;
+    	
+    	//keys for football/weather
+    	String[] footballKeys = {"Team", "Goals", "Goals Allowed"};
+    	String[] weatherKeys = {"Day", "MxT", "MnT"};
+    	if(args[argPos] == "football")
+    		mapKeys = footballKeys;
+    	if(args[argPos] == "weather")
+    		mapKeys = weatherKeys;
+    	
+    	//creating CSVReader object
+    	CSVReader csvWeather = new CSVReader("de/exxcellent/challenge/" + args[0] + ".csv");
+    	
+    	//creating map from csv content
+    	RowsToMap mapFromCSV = new RowsToMap(csvWeather);
     	
     	//printing results   	
-    	dayWithSmallestTempSpread = getDifference(weatherMap, "Day", "MxT", "MnT");
-    	System.out.println("Day with smallest temperature spread: " + dayWithSmallestTempSpread);
-    	teamWithSmallestGoalDiff = getDifference(footballMap, "Team", "Goals", "Goals Allowed");
-    	System.out.println("\nTeam with minimum goal difference: " + teamWithSmallestGoalDiff);
+    	smallestDiffResult = getDifference(mapFromCSV, mapKeys[0], mapKeys[1], mapKeys[2]);
+    	System.out.println(outputText + smallestDiffResult);
     }
 
     /**

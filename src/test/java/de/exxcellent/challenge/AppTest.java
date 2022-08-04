@@ -25,7 +25,8 @@ class AppTest {
 
     @Test
     void runFootball() {
-        //App.main(["--football", "football.csv"]);
+    	String[] args = {"weather"};
+        App.main(args);
     }
 
 }

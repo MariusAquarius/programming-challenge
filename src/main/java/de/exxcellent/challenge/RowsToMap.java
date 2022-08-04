@@ -35,7 +35,7 @@ public class RowsToMap {
 		}
 	}
 	
-	/** transposes ArrayList (switching x & y axis)
+	/** transposes ArrayList (switching x and y axis)
 	 *  @param list ArrayList to transpose
 	 *  @return transpoList transposed ArrayList
 	 */
